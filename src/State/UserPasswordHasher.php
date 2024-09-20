@@ -14,14 +14,12 @@ class UserPasswordHasher implements ProcessorInterface
     private UserPasswordHasherInterface $passwordHasher)
     {}
 
-
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Users
     {
         $hashedPassword = $this->passwordHasher->hashPassword(
             $data,
             $data->getPassword()
         );
-
 
 
         $data->setPassword($hashedPassword);

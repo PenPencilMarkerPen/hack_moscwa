@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,6 +18,7 @@ use ApiPlatform\Metadata\Post;
 #[ApiResource(
     operations: [
         new Post(processor: UserPasswordHasher::class, validationContext: ['groups' => ['Default', 'user:create']]),
+        new GetCollection(security: "is_granted('ROLE_USER')"),
     ],    normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:create', 'user:update']],
 )]
@@ -152,7 +154,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeInform(Inform $inform): static
     {
         if ($this->informs->removeElement($inform)) {
-            // set the owning side to null (unless already changed)
             if ($inform->getAdmin() === $this) {
                 $inform->setAdmin(null);
             }
