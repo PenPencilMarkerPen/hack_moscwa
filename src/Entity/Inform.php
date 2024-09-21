@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Post;
 use App\Dto\Inform\InformOutputDto\InformOutputDto;
 use App\Repository\InformRepository;
 use App\State\InformProvider;
+use App\State\InformStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -20,7 +21,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
             output: InformOutputDto::class,
             provider: InformProvider::class,
         ),
-        new Post(),
+        new Post(
+            processor: InformStateProcessor::class
+        ),
     ],
     normalizationContext: ['groups' => ['inform:read']],
     denormalizationContext: ['groups' => ['inform:create', 'inform:update']],
@@ -42,7 +45,7 @@ class Inform
     private ?string $betta = null;
 
     #[ORM\ManyToOne(inversedBy: 'informs')]
-    #[Groups(['inform:read', 'inform:create'])]
+    #[Groups(['inform:read'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Users $admin = null;
 
