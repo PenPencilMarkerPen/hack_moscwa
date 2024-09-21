@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: InformRepository::class)]
 #[ApiResource(
+    paginationEnabled: false,
     operations: [
         new GetCollection(
             output: InformOutputDto::class,

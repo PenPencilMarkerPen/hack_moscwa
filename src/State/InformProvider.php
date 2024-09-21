@@ -9,7 +9,7 @@ use App\Dto\Inform\InformOutputDto\InformOutputGetDataTransformer;
 use App\Entity\Inform;
 use App\State\CollectionProviderInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class InformProvider implements CollectionProviderInterface
 {
@@ -26,12 +26,13 @@ class InformProvider implements CollectionProviderInterface
 
         $user = $this->security->getUser();
         if (!$user)
-            return [];
-        
+            throw new AuthenticationException('User is not authenticated');        
+
         $informs = $this->collectionProvider->provide($operation, $uriVariables, $context);
 
+    
         $filteredInforms = array_filter(
-            iterator_to_array($informs->getIterator()),
+            $informs,
             fn (Inform $inform): bool => $inform->getAdmin() === $user 
         );
 
