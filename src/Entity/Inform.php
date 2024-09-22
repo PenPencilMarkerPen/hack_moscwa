@@ -49,6 +49,9 @@ class Inform
     #[ORM\JoinColumn(nullable: false)]
     private ?Users $admin = null;
 
+    #[ORM\ManyToOne(inversedBy: 'informs')]
+    private ?Session $session = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +89,18 @@ class Inform
     public function setAdmin(?Users $admin): static
     {
         $this->admin = $admin;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): static
+    {
+        $this->session = $session;
 
         return $this;
     }

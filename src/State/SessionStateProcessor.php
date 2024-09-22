@@ -4,14 +4,14 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Entity\Inform;
-use Symfony\Bundle\SecurityBundle\Security;
+use App\Entity\Session;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Bundle\SecurityBundle\Security;
 
 
-
-class InformStateProcessor implements ProcessorInterface
+class SessionStateProcessor implements ProcessorInterface
 {
+
     public function __construct(
         private ProcessorInterface $processor,
         private Security $security
@@ -20,18 +20,18 @@ class InformStateProcessor implements ProcessorInterface
         
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Inform
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Session
     {
+
         $user = $this->security->getUser();
 
         if (!$user)
-            throw new AuthenticationException('User is not authenticated');  
+            throw new AuthenticationException('User is not authenticated');
 
-        $data->setAdmin($user);
-        $data->setSession($user->getSessions()->last());
-
-
+        $data->setUsers($user);
+        $data->setDateTime(new \DateTime('now'));
+    
         return $this->processor->process($data, $operation, $uriVariables, $context);
-
     }
 }
+ 

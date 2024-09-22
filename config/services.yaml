@@ -28,3 +28,6 @@ services:
       $collectionProvider: "@api_platform.doctrine.orm.state.collection_provider"
   App\State\InformStateProcessor:
     $processor: "@api_platform.doctrine.orm.state.persist_processor"
+
+  App\State\SessionStateProcessor:
+    $processor: "@api_platform.doctrine.orm.state.persist_processor"
