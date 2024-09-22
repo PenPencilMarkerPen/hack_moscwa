@@ -36,6 +36,7 @@ class InformController extends AbstractController
             $inform->setAlpha($itemData['alpha']);
             $inform->setBetta($itemData['betta']);
             $inform->setAdmin($user); 
+            $inform->setDateTime(time());
             $inform->setSession($user->getSessions()->last()); 
             $this->entityManager->persist($inform);
         }

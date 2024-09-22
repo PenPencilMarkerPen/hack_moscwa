@@ -29,7 +29,7 @@ class SessionStateProcessor implements ProcessorInterface
             throw new AuthenticationException('User is not authenticated');
 
         $data->setUsers($user);
-        $data->setDateTime(new \DateTime('now'));
+        $data->setDateTime(time());
     
         return $this->processor->process($data, $operation, $uriVariables, $context);
     }

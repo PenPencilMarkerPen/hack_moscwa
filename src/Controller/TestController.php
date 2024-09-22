@@ -15,25 +15,15 @@ class TestController extends AbstractController
     {
     }
 
-    #[Route('/test', name: 'app_test')]
+    #[Route('/', name: 'app_test')]
     public function index(): Response
     {
-        return $this->render('test/index.html.twig', [
-            'controller_name' => 'TestController',
-        ]);
-    }
+        $user = $this->security->getUser();
 
-    #[Route('/api/test', name: 'api_test')]
-    public function test(): Response 
-    {
+        if (!$user)
+            return $this->redirectToRoute('app_login');
 
-        var_dump($this->security->getUser()->getEmail());
 
-        $response = new Response(
-            'Content',
-            Response::HTTP_OK,
-        );
-
-        return  $response;
+          return $this->redirectToRoute('app_profile');
     }
 }

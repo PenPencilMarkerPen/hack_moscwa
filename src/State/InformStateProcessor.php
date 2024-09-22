@@ -28,6 +28,7 @@ class InformStateProcessor implements ProcessorInterface
         if (!$user)
             throw new AuthenticationException('User is not authenticated');  
 
+        $data->setDateTime(time());
         $data->setAdmin($user);
         $data->setSession($user->getSessions()->last());
 

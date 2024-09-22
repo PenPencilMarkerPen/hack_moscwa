@@ -9,6 +9,7 @@ use App\Dto\Inform\InformOutputDto\InformOutputDto;
 use App\Repository\InformRepository;
 use App\State\InformProvider;
 use App\State\InformStateProcessor;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\Collection;
@@ -54,6 +55,9 @@ class Inform
 
     #[ORM\ManyToOne(inversedBy: 'informs')]
     private ?Session $session = null;
+
+    #[ORM\Column()]
+    private ?string $dateTime = null;
 
 
     public function getId(): ?int
@@ -108,4 +112,17 @@ class Inform
 
         return $this;
     }
+
+    public function getDateTime(): string
+    {
+        return $this->dateTime;
+    }
+
+    public function setDateTime(string $dateTime = null): static
+    {
+        $this->dateTime = $dateTime;
+
+        return $this;
+    }
+
 }

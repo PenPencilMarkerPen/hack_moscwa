@@ -21,7 +21,8 @@ security:
     main:
       lazy: true
       provider: app_user_provider
-      stateless: true
+      stateless: false
+      entry_point: form_login
       json_login:
         check_path: auth
         username_path: email
@@ -29,6 +30,14 @@ security:
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
       jwt: ~
+      form_login:
+        login_path: app_login
+        check_path: app_login
+        enable_csrf: true
+      logout:
+        path: app_logout
+        # where to redirect after logout
+        # target: app_any_route
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -39,7 +48,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
   security:

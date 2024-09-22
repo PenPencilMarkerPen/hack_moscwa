@@ -27,8 +27,8 @@ class Session
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_time = null;
+    #[ORM\Column]
+    private ?string $date_time = null;
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
     private ?Users $users = null;
@@ -49,12 +49,12 @@ class Session
         return $this->id;
     }
 
-    public function getDateTime(): ?\DateTimeInterface
+    public function getDateTime(): ?string
     {
         return $this->date_time;
     }
 
-    public function setDateTime(\DateTimeInterface $date_time ): static
+    public function setDateTime(string $date_time ): static
     {
         $this->date_time = $date_time;
 
