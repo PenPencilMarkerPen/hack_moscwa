@@ -11,6 +11,8 @@ use App\State\InformProvider;
 use App\State\InformStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\Common\Collections\Collection;
+
 
 
 #[ORM\Entity(repositoryClass: InformRepository::class)]
@@ -22,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
             provider: InformProvider::class,
         ),
         new Post(
-            processor: InformStateProcessor::class
+            processor: InformStateProcessor::class,
+            inputFormats: ['json' => ['application/ld+json']],
         ),
     ],
     normalizationContext: ['groups' => ['inform:read']],
@@ -51,6 +54,7 @@ class Inform
 
     #[ORM\ManyToOne(inversedBy: 'informs')]
     private ?Session $session = null;
+
 
     public function getId(): ?int
     {

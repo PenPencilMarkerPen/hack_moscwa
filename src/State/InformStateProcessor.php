@@ -24,6 +24,7 @@ class InformStateProcessor implements ProcessorInterface
     {
         $user = $this->security->getUser();
 
+        
         if (!$user)
             throw new AuthenticationException('User is not authenticated');  
 
